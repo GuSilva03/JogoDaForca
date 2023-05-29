@@ -172,6 +172,7 @@ function compare(letra){
     const pos = PalavraSorteio.indexOf(letra)
     if(! PalavraSorteio.includes(letra)){
         vidas--
+        MudarImagem();
     }
     else{
         for( i = 0; i <PalavraSorteio.length; i++){
@@ -198,3 +199,28 @@ function compare(letra){
         alert("PERDEU")
     }
 }
+function MudarImagem(){
+    switch(vidas){
+        case 5: 
+            document.getElementById("img").style.background = "url('./imagens/forca01.png')"
+            break;
+        case 4: 
+            document.getElementById("img").style.background = "url('./imagens/forca02.png')"
+            break;
+        case 3: 
+            document.getElementById("img").style.background = "url('./imagens/forca03.png')"
+            break;
+        case 2: 
+            document.getElementById("img").style.background = "url('./imagens/forca04.png')"
+            break;
+        case 1: 
+            document.getElementById("img").style.background = "url('./imagens/forca05.png')"
+            break;
+        case 0: 
+            document.getElementById("img").style.background = "url('./imagens/forca06.png')"
+            break;
+        default:
+            document.getElementById("img").style.background = "url('./imagens/forca.png')"
+    }
+}
+
