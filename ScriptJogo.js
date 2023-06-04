@@ -1,3 +1,4 @@
+let newGame = true;
 let vidas = 6;
 let ListaR = [];
 let PalavraCategoria ;
@@ -60,7 +61,7 @@ const palavras = [
         categoria : "STAR WARS",
     },
     palavra15 = {
-        nome : "PADMÉ AMIDALA",
+        nome : "PADME AMIDALA",
         categoria : "STAR WARS",
     },
     palavra16 = {
@@ -130,11 +131,6 @@ function criePalavra(){
     const SortPalavra = parseInt(Math.random()* palavras.length)
     PalavraSorteio = palavras[SortPalavra].nome
     PalavraCategoria = palavras[SortPalavra].categoria
-    console.log(PalavraSorteio)
-    console.log(PalavraCategoria)
-    for(letra of PalavraSorteio){
-        ListaR.push(" ");
-    }
 }
 MontPalvra();
 function MontPalvra(){
@@ -143,38 +139,55 @@ function MontPalvra(){
 
     const Tela = document.getElementById("Secret-Word");
     Tela.innerHTML = "";
-    
     for(i  =  0; i < PalavraSorteio.length; i++){
         if (ListaR[i] == undefined){
-            ListaR[i] = "&nbsp;"
-            Tela.innerHTML =  Tela.innerHTML + " <div class='letras'>" +  ListaR[i] + "</div>"
+            if(PalavraSorteio[i] === " "){
+                ListaR[i] = " "
+                Tela.innerHTML =  Tela.innerHTML + " <div class='letrasEspaco'>" +  ListaR[i] + "</div>"
+            }
+            else{
+                ListaR[i] = "&nbsp"
+                Tela.innerHTML =  Tela.innerHTML + " <div class='letras'>" +  ListaR[i] + "</div>"
+            }
         }
         else{
-            Tela.innerHTML =  Tela.innerHTML + " <div class='letras'>" +  ListaR[i] + "</div>"
+            if(PalavraSorteio[i] == " "){
+                ListaR[i] = " "
+                Tela.innerHTML =  Tela.innerHTML + " <div class='letrasEspaco'>" +  ListaR[i] + "</div>"
+            }
+           else{
+                Tela.innerHTML =  Tela.innerHTML + " <div class='letras'>" +  ListaR[i] + "</div>"
+            } 
         }
-    }
+}
 }
 function VerLetra(letra){
-    console.log(vidas)
+    document.getElementById("T-" + letra).disabled = true;
     if (vidas > 0 ){
-        mudarLetra("T-" + letra);
+        mudarLetra("T-" + letra, false);
         compare(letra);
         MontPalvra();
-    }
-    
+    }  
 }
-function mudarLetra(tecla){
-    document.getElementById(tecla).style.backgroundColor = "#AC1A00";
-    document.getElementById(tecla).style.color =  "#FFFFFF";
-   
-}   
-function compare(letra){
+function mudarLetra(tecla, teclaCerta){
+    if(teclaCerta == false){
+        document.getElementById(tecla).style.backgroundColor = "#AC1A00";
+        document.getElementById(tecla).style.color =  "#FFFFFF";
+    }
+    else{
+        document.getElementById(tecla).style.backgroundColor = "#01E816";
+        document.getElementById(tecla).style.color =  "#FFFFFF";
+    }
+}
+console.log(PalavraSorteio)
+async function compare(letra){
     const pos = PalavraSorteio.indexOf(letra)
     if(! PalavraSorteio.includes(letra)){
         vidas--
         MudarImagem();
     }
     else{
+        mudarLetra("T-" + letra, true);
         for( i = 0; i <PalavraSorteio.length; i++){
             if(PalavraSorteio[i] == letra){
             ListaR[i] = letra;
@@ -186,41 +199,75 @@ function compare(letra){
     for(var i = 0; i < letraTotal; i++){
         if(ListaR[i] == PalavraSorteio[i]){
             letrasCertas++;
-            console.log("opa")
         }
         else{
             break
         }
     }
     if(letrasCertas == letraTotal){
-        alert("BOA MEU NOBRE")
+        AbriModal("PARABÉNS!!! VOCÊ VENCEU")
+        // vidas = 0
+        reset();
     }
     if(vidas == 0){
-        alert("PERDEU")
+        AbriModal("IXI", "Infelimente você errou! Obrigado por tentar, a palavra secreta era<br>" + PalavraSorteio);
+        reset();
     }
 }
 function MudarImagem(){
     switch(vidas){
         case 5: 
             document.getElementById("img").style.background = "url('./imagens/forca01.png')"
+            timer.setTimeout(1.5)
             break;
         case 4: 
             document.getElementById("img").style.background = "url('./imagens/forca02.png')"
+            setTimeout(1.5)
             break;
         case 3: 
             document.getElementById("img").style.background = "url('./imagens/forca03.png')"
+            setTimeout(1.5)
             break;
         case 2: 
             document.getElementById("img").style.background = "url('./imagens/forca04.png')"
+            setTimeout(1.5)
             break;
         case 1: 
             document.getElementById("img").style.background = "url('./imagens/forca05.png')"
+            setTimeout(1.5)
             break;
         case 0: 
             document.getElementById("img").style.background = "url('./imagens/forca06.png')"
+            setTimeout(0.5)
             break;
         default:
             document.getElementById("img").style.background = "url('./imagens/forca.png')"
     }
 }
-
+function AbriModal(titulo, mensagem, som){
+    let modTitulo = document.getElementById("exampleModalLabel");
+    modTitulo.innerText = titulo;
+    let modMensagem = document.getElementById("ModalMensagem");
+    modMensagem.innerHTML = mensagem;
+    $("#Modal").modal({
+        show: true
+    });
+}
+let reiniciar = document.querySelector("#reiniciar")
+reiniciar.addEventListener("click", function(){
+    newGame = false;
+    location.reload();
+});
+async function timer(tempo){
+    return new Promise(s => setTimeout(s, tempo));
+}
+async function reset(){
+    while(newGame == true){
+        document.getElementById("reiniciar").style.backgroundColor = "green";
+        document.getElementById("reiniciar").style.scale = "1.5";
+        await timer(1000)
+        document.getElementById("reiniciar").style.backgroundColor = "purple";
+        document.getElementById("reiniciar").style.scale = "1.7";
+        await timer(1000)
+    }
+}
