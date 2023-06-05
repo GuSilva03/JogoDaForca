@@ -73,8 +73,10 @@ body{
 }
 .btn-primary{
     background-color: #F96304;
-    color: #F96304;
+    color:black;
     border: none;
+    border-radius: 4px;
+    font-size: 15px;
 }
 
 #tipo{
@@ -109,11 +111,40 @@ body{
 #status{
     position: fixed;
     bottom: 20px;
+    width: 100%;
+    text-align: center;
 }
 #play{
-    bottom: 90px;
+    bottom: 30px;
     right: 70px;
     transform: rotate(-75deg);
+    transform-origin: left top 0;
+    display: none;
+}
+a{
+    position: fixed;
+    text-decoration: none;
+    font-size: 2.5em;
+    color: black;
+}
+a:hover{
+    color: #fefefe;
+    transform: scale(1.5);
+}
+a:visited{
+    color: black;
+}
+#github{
+    bottom: 150px;
+    left: 10px;
+}
+#instagram{
+    bottom: 20px;
+    left: 10px;
+}
+#linked{
+    bottom: 85px;
+    left: 10px;
 }
 .container-modal{
     position: fixed;
@@ -125,6 +156,7 @@ body{
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.6);
+    display: none;
 }
 .add-palavra{
     position: relative;
@@ -157,17 +189,68 @@ body{
         top: 0px; opacity: 1;
     }
 }
+.Modal-head-Palavra{
+    padding: 2px 16px;
+    background-color: rgb(245, 245, 62);
+    font-size: 1.3em;
+    border-bottom: 5px solid black;
+}
+.fim{
+    position: relative;
+    background-color: #0000;
+    float: right;
+    font-size: 2em;
+    font-weight: bold;
+}
+.fim:hover, .fim:focus{
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+.Modal-body-Palavra{
+    display: flex;
+    flex-direction: column;
+    padding: 2px 16px;
+}
+.Modal-body-Palavra input, .Modal-body-Palavra button{
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.5em;
+    border-radius: 8px;
+    outline: none;
+    border: 1px solid #9c9c9c;
+    align-items: center;
+
+}
+.Modal-body-Palavra input{
+    text-transform: uppercase;
+}
+.Modal-body-Palavra button{
+    background-color: rgb(245, 245, 62);
+    cursor: pointer;
+
+}
+.Modal-body-Palavra button:hover{
+    background-color: rgba(128, 235, 6, 0.925);
+    color: #fefefe;
+}
 @media(
     min-width: 321px){
     .letras button{
-        width: 5px;
-        height: 5px;
+        width: 3px;
+        height: 3px;
+    }
+    .alfa{
+        display: flex;
     }
     #tipo{
         font-size: 2em;
     }
     #secret-word{
         font-size: 1em;
+    }
+    .add-Palavra{
+        width: 80%;
     }
 }
 @media(
@@ -184,6 +267,9 @@ body{
     }
     #tipo{
         font-size: 2em;
+    }
+    .add-Palavra{
+        width: 80%;
     }
 }
 @media(
@@ -202,9 +288,12 @@ body{
     #tipo{
         font-size: 3.5em;
     }
+    .add-Palavra{
+        width: 80%;
+    }
 }
 @media(
-    min-width: 769px){
+    min-width: 768px){
     .letras button{
         width: 70px;
         height: 70px;
@@ -219,5 +308,14 @@ body{
     }
     #tipo{
         font-size: 4em;
+    }
+    .add-Palavra{
+        width: 80%;
+    }
+}
+@media(
+    min-width: 1025px){
+    .add-Palavra{
+        width: 80%;
     }
 }
